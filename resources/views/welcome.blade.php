@@ -9,6 +9,9 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet" type="text/css">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+        
 
         <!-- Styles -->
         <style>
@@ -65,31 +68,71 @@
         </style>
     </head>
     <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-                        <a href="{{ route('register') }}">Register</a>
-                    @endauth
-                </div>
-            @endif
-
+        
             <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Documentation</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+
+
+<div  ng-app="TaskCrudApp">
+                                     <div class="container-fluid" ng-controller="TaskController">
+                                                <div class="row">
+                                                    <div class="panel panel-default users-content">
+                                                        <div class="panel-heading">Add Task <a href="javascript:void(0);" class="glyphicon glyphicon-plus" onclick="$('.formData').slideToggle();"></a></div>
+                                            
+                                                        <div class="col-md-6">
+                                                        <div class="panel-body none formData">
+                                                            <form class="form" name="userForm">
+                                                                <div class="form-group">
+                                                                    <label>Name</label>
+                                                                    <input type="text" class="form-control" name="name" ng-model="formdata.name"/>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Description</label>
+                                                                    <textarea class="form-control" rows="5" id="description" ng-model="formdata.description"></textarea>
+                                                                
+                                                                </div>
+                                                               
+                                                                <a href="javascript:void(0);" class="btn btn-warning" onclick="$('.formData').slideUp();">Cancel</a>
+                                                                <a href="javascript:void(0);" class="btn btn-success" ng-hide="formdata.id" ng-click="save(modalstate, id)">Add </a>
+                                                                <a href="javascript:void(0);" class="btn btn-success" ng-hide="!formdata.id" ng-click="update(modalstate, id)">Update</a>
+                                                            </form>
+                                                        </div>
+                                                        </div>
+                                                         
+                                                     
+                                                         <table class="table table-striped">
+                                                            <tr>
+                                                                <th width="5%">#</th>
+                                                                <th width="20%">Name</th>
+                                                                <th width="30%">Description</th>
+                                                               
+                                                                <th width="10%"></th>
+                                                            </tr>
+                                                            <tr ng-repeat="task in tasks">
+                                                                <td>@{{$index + 1}}</td>
+                                                                <td>@{{ task.name }}</td>
+                                                                <td>@{{ task.description}}</td>
+                                                               
+                                                                <td>
+                                                                    <a href="javascript:void(0);" class="fa fa-edit" ng-click="toggle('edit', task.id)"></a>
+                                                                    <a href="javascript:void(0);" class="fa fa-trash" ng-click="confirmDelete(task.id)"></a>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                          
+                                    </div>
+
+
+
             </div>
-        </div>
+       
+
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
+                <script src="<?= asset('https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.7.2/angular.min.js') ?>"></script> 
+                @include('scripts')
+
     </body>
 </html>
